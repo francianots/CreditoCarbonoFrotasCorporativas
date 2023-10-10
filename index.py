@@ -69,7 +69,7 @@ while opcFim != 'N':
                 metaDesejada = (emissao/100)*metaDesejada
                 print(f'Você precisa reduzir sua emissão de CO² em {metaImposta:.2f}Kg')
                 if metaDesejada > metaImposta:
-                    print(f'Caso atinja a meta desejada voce terá um salde de {(metaDesejada-metaImposta)/1000:.2f} creditos de carbono.')
+                    print(f'Caso atinja a meta desejada você terá um salde de {(metaDesejada-metaImposta)/1000:.2f} creditos de carbono.')
                 elif metaDesejada < metaImposta:
                     print(f'Caso atinja somente a meta desejaja ficara com uma divida de {(metaImposta-metaDesejada)/1000:.2f} creditos de carbono. ')
                 print('-' * 73)
