@@ -13,54 +13,63 @@ opcFim = ('S','N')
 
 
 while opcFim != 'N': #lopping pricipal para repetição de calculo caso desejado
-
+    emissao = 0
     print('''
-=========================================================================
-||           C A L C U L O    DE    E M I S S Ã O   DE   CO²           ||
-=========================================================================''')
+    =========================================================================
+    ||           C A L C U L O    DE    E M I S S Ã O   DE   CO²           ||
+    =========================================================================''')
+
+    while True:
+
+        print('''
+    ==============================
+    |    1 -  moto               | 
+    |    2 -  carro  (gasolina)  |
+    |    3 -  carro  (etanol)    | 
+    |    4 -  onibus             |
+    |    5 -  caminhão           |
+    ==============================''')  #menu de opcçoes de veiculo
+    
+    
+        while True:    #atribuição da emição de cada tipo de veiculo para calculo
+            opcVeiculo = int(input('Digite uma opção de veiculo para calculo: '))
+            print('=' * 72)
+            match opcVeiculo:
+                case 1:
+                    co2 = 2.40
+                    break
+                case 2:
+                    co2 = 1.70
+                    break
+                case 3:
+                    co2 = 0.9
+                    break
+                case 4:
+                    co2 = 3.20
+                    break
+                case 5:
+                    co2 = 3.20
+                    break
+                case _:
+                    print('Opção invalida!')
 
 
+        qtdVeiculo = int(input('Qual a quantidade de veiculos na sua frota?: ')) #entrada de dados da frota 
+        consumoKml = float(input('Qual a média de consumo por veiculo em km/l?: '))
+        kmRodado = float(input('Qual a média de km mensal percorrido por veiculo?: '))
 
-    print('''
-==============================
-|    1 -  moto               | 
-|    2 -  carro  (gasolina)  |
-|    3 -  carro  (etanol)    | 
-|    4 -  onibus             |
-|    5 -  caminhão           |
-==============================''')  #menu de opcçoes de veiculo
-   
-   
-    while True:    #atribuição da emição de cada tipo de veiculo para calculo
-        opcVeiculo = int(input('Digite uma opção de veiculo para calculo: '))
+        emissao += ((qtdVeiculo * kmRodado) / consumoKml)*co2    #processamento da emissão de CO² da frota   
+
         print('=' * 72)
-        match opcVeiculo:
-            case 1:
-                co2 = 2.40
+        addVeic =input('Sua frota possui algum outro tipo de veiculo? [S/N]; ').strip().upper()[0]
+        print('=' * 72)
+        if ver(addVeic,opcFim) == True:     #verificação de opção valida
+            if addVeic == 'N':
                 break
-            case 2:
-                co2 = 1.70
-                break
-            case 3:
-                co2 = 0.9
-                break
-            case 4:
-                co2 = 3.20
-                break
-            case 5:
-                co2 = 3.20
-                break
-            case _:
-                print('Opção invalida!')
-
-
-    qtdVeiculo = int(input('Qual a quantidade de veiculos na sua frota?: ')) #entrada de dados da frota 
-    consumoKml = float(input('Qual a média de consumo por veiculo em km/l?: '))
-    kmRodado = float(input('Qual a média de km mensal percorrido por veiculo?: '))
-
-    emissao = ((qtdVeiculo * kmRodado) / consumoKml)*co2    #processamento da emissão de CO² da frota   
-
-
+        else:
+            print('Opção invalida!')
+            addVeic =input('Sua frota possui algum outro tipo de veiculo? [S/N]; ').strip().upper()[0]
+    
     print('-' * 73)     #apresentação da emissão da frota 
     print(f'A quantidade média de CO² emitida pela sua frota é de {emissao/1000 if emissao > 1000 else emissao:.0f}','tonelada(s)' if emissao > 1000 else 'quilo(s)', 'por mês.') 
     print('=' * 72)
@@ -106,7 +115,7 @@ while opcFim != 'N': #lopping pricipal para repetição de calculo caso desejado
             opcMeta = input('Você possui uma meta de redução? [S/N]: ').strip().upper()[0]
     
     
-    fimCodigo = input('Gostaria de fazer um novo calculo de emissão? [S/N]: ').strip().upper()[0]  #opção de novo calculo c aso desejado
+    fimCodigo = input('Gostaria de fazer um novo calculo de emissão? [S/N]: ').strip().upper()[0]  #opção de novo calculo caso desejado
     while True:
         if ver(fimCodigo,opcFim) == True:       #verificação de opção valida
             if fimCodigo == 'N':
