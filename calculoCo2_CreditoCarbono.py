@@ -9,28 +9,29 @@ def ver(a,b):    #função para verificar se a string fornecida é valida
 
 
 def dados (a):   # função para entrada de dados da frota na biblioteca
-    frota[veiculo]['qtdVeiculo'] = int(input('Qual a quantidade de veiculos na sua frota?: ')) 
+    frota[veiculo]['qtdVeiculo'] += int(input('Qual a quantidade de veiculos na sua frota?: ')) 
     frota[veiculo]['consumoKml'] = float(input('Qual a média de consumo por veiculo em km/l?: '))
     frota[veiculo]['kmRodado'] = float(input('Qual a média de km mensal percorrido por veiculo?: '))
-    frota[veiculo]['emissao'] = ((frota[veiculo]['qtdVeiculo'] * frota[veiculo]['kmRodado']) / frota[veiculo]['consumoKml'])*a    #processamento da emissão de CO² da frota      
+    frota[veiculo]['emissao'] += ((frota[veiculo]['qtdVeiculo'] * frota[veiculo]['kmRodado']) / frota[veiculo]['consumoKml'])*a 
+    frota['emissao'] += frota[veiculo]['emissao']    #processamento da emissão de
 
 
 #programa principal
 opcFim = ('S','N')
 
-
 while opcFim != 'N': #lopping pricipal para repetição de calculo caso desejado
-    emissao = 0
+    
     frota = {'moto':{'co2L':0, 'qtdVeiculo': 0, 'consumoKml': 0, 'kmRodado': 0, 'emissao': 0},
               'carro':{'co2L': 0, 'qtdVeiculo': 0, 'consumoKml': 0, 'kmRodado': 0, 'emissao': 0},
                 'onibus': {'co2L': 0, 'qtdVeiculo': 0,'consumoKml': 0, 'kmRodado': 0, 'emissao': 0},
-                  'caminhao': {'co2L': 0, 'qtdVeiculo': 0,'consumoKml': 0, 'kmRodado': 0, 'emissao': 0}
+                  'caminhao': {'co2L': 0, 'qtdVeiculo': 0,'consumoKml': 0, 'kmRodado': 0, 'emissao': 0},
+                   'emissao': 0
                   }
     print('''
     =========================================================================
     ||           C A L C U L O    DE    E M I S S Ã O   DE   CO²           ||
     =========================================================================''')
-
+    addVeic = str
     while addVeic != 'N':
 
         print('''
@@ -58,33 +59,36 @@ while opcFim != 'N': #lopping pricipal para repetição de calculo caso desejado
                     veiculo = 'carro'
                     print('''
     ==============================
-    |   O combustivel utilizado  | 
-    |  na sua frota de carros é: |
+    |  O combustivel utilizado   | 
+    | nos carros da sua frota é: |
     |----------------------------|
     |       1 - gasolina         |
     |       2 -  etanol          |
     |============================| 
-                            ''')  #menu de opçções de combustivel para carro
+                            ''')  #menu de opções de combustivel para carro
                     while True:
                         combustivelC = int(input('Digite uma opção de combustivel: '))
                         match combustivelC:
                             case 1:
                                 frota[veiculo]['co2L'] = 1.70
-                                dados(frota[veiculo['co2L']])
+                                dados(frota[veiculo]['co2L'])
                                 break
                             case 2: 
                                 frota[veiculo]['co2L'] = 0.9
-                                dados(frota[veiculo['co2L']])
+                                dados(frota[veiculo]['co2L'])
                                 break
                             case _:
                                 print('Opção invalida!')
+                    break
                 case 3:
+                    veiculo = 'onibus'
                     frota[veiculo]['co2L'] = 3.20
-                    dados(frota[veiculo['co2L']])
+                    dados(frota[veiculo]['co2L'])
                     break
                 case 4:
+                    veiculo = 'caminhao'
                     frota[veiculo]['co2L'] = 3.20
-                    dados(frota[veiculo['co2L']])
+                    dados(frota[veiculo]['co2L'])
                     break
                 case _:
                     print('Opção invalida!')
@@ -96,13 +100,24 @@ while opcFim != 'N': #lopping pricipal para repetição de calculo caso desejado
             if ver(addVeic,opcFim) == True:     #verificação de opção valida
                 if addVeic == 'N':
                     break
+                else:
+                    break
             else:
                 print('Opção invalida!')
-                
-    
-''' print('-' * 73)     #apresentação da emissão da frota 
-    print(f'A quantidade média de CO² emitida pela sua frota é de {emissao/1000 if emissao > 1000 else emissao:.0f}','tonelada(s)' if emissao > 1000 else 'quilo(s)', 'por mês.') 
-    print('=' * 72)'''
+
+    print('='*72)   #apresentação da tabela de dados
+    print(f'{"DADOS DA SUA FROTA":^72}')
+    print('='*72)
+    print(f'{"TIPO DE VEICULO":^15} | {"QTD DE VEICULOS":^15} | {"CONSUM/MES":^10} | {"KM/MES":^7} | {"EMISSÃO/MES":^10}')  
+    print('-'*72)
+    for c in frota.keys():
+        if c != 'emissao':
+            if frota[c]['qtdVeiculo'] > 0 :
+                print(f'{c:^15} | {frota[c]["qtdVeiculo"]:^15} | {frota[c]["kmRodado"] / frota[c]["consumoKml"]:^11.0f} | {frota[c]["kmRodado"]:^7.0f} | {frota[c]["emissao"] if frota[c]["emissao"] < 1000 else frota[c]["emissao"]/1000:.0f} {"kg/CO²" if frota[c]["emissao"] < 1000 else "Ton/CO²"} ')
+    print('-'*72)
+    print(f'EMISSÃO TOTAL DA FROTA: {frota["emissao"] if frota["emissao"] < 1000 else frota["emissao"] /1000:.0f} {"kg/CO²" if frota["emissao"] < 1000 else "Ton/CO²"} ')
+    print('-'*72)
+
 
     opcMeta = input('Você possui uma meta de redução? [S/N]: ').strip().upper()[0] #Questionamento para iniciar segunda parte do código
     print('=' * 72)
@@ -113,14 +128,12 @@ while opcFim != 'N': #lopping pricipal para repetição de calculo caso desejado
             if opcMeta == 'N':
                 break
                 print('-' * 73)
-            
-            
             else:       #coleta de dados
-                metaImposta = float(input('Digite sua meta imposta em %: '))
-                metaDesejada = float(input('Digite a que você  imagina que ira alcaçar em %: '))
+                metaImposta = float(input('Digite a meta precisa alcançar em %: '))
+                metaDesejada = float(input('Digite a meta que você  acredita que ira alcaçar em %: '))
  
-                metaImposta = (emissao/100)*metaImposta     #processamento de dados
-                metaDesejada = (emissao/100)*metaDesejada
+                metaImposta = (frota['emissao']/100)*metaImposta     #processamento de dados
+                metaDesejada = (frota['emissao']/100)*metaDesejada
                 
                 
                 print(f'Você precisa reduzir sua emissão de CO² em {metaImposta if metaImposta < 1000 else metaImposta/1000:.0f}', 'tonelada(s)' if metaImposta > 1000 else 'quilos(s)')        #apresentação da redução de emissão necessaria 
