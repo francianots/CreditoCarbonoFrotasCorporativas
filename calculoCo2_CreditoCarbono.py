@@ -144,7 +144,7 @@ while opcFim != 'N': #lopping pricipal para repetição de calculo caso desejado
                 
                 
                 elif metaDesejada < metaImposta:        #apresentação da divida em creditos caso atinja números esperados
-                    print(f'Caso atinja somente a meta desejaja ficara com uma divida de {(metaImposta-metaDesejada)/1000:.2f} creditos de carbono. ')
+                    print(f'Caso atinja somente a meta desejada ficara com uma divida de {(metaImposta-metaDesejada)/1000:.2f} creditos de carbono. ')
                 
                 
                 print('-' * 73)
