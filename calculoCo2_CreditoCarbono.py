@@ -141,6 +141,8 @@ while opcFim != 'N': #lopping pricipal para repetição de calculo caso desejado
                 
                 if metaDesejada > metaImposta:      #apresentação do saldo de creditos caso atinja números esperados
                     print(f'Caso atinja a meta desejada você terá um saldo de {(metaDesejada-metaImposta)/1000:.2f} creditos de carbono.')
+                    valorCred = ((metaDesejada-metaImposta)/1000) * 78
+                    print(f'Seus créditos de carbono equivalem á R$ {valorCred:.2f}')
                 
                 
                 elif metaDesejada < metaImposta:        #apresentação da divida em creditos caso atinja números esperados
